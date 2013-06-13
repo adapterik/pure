@@ -3,8 +3,9 @@
 
 /* MAIN MENU STYLING */
 
+/* EAP - add ul for children */
 .pure-menu.pure-menu-open,
-.pure-menu.pure-menu-horizontal li .pure-menu-children {
+.pure-menu.pure-menu-horizontal li .pure-menu-children > ul {
     background: #fff; /* Old browsers */
     border: 1px solid #b7b7b7;
 }
@@ -25,29 +26,34 @@
 
 }
 
+/* EAP - the second children one is wrong -- can-have-children is ON the li; need to look at later
+correct the li to a  */
 .pure-menu a,
-.pure-menu .pure-menu-can-have-children > li:after {
+.pure-menu .pure-menu-can-have-children > a:after {
     color: #777;
 }
 
-.pure-menu .pure-menu-can-have-children > li:hover:after {
+.pure-menu .pure-menu-can-have-children > a:hover:after {
     color: #fff;
 }
 
 /* Focus style for a dropdown menu-item when the parent has been opened */
-.pure-menu .pure-menu-open {
+.pure-menu .pure-menu-children.pure-menu-open > ul {
     background: #dedede;
 }
 
 
-.pure-menu li a:hover,
-.pure-menu li a:focus {
+/* EAP add the more specific > prior to a */
+.pure-menu li > a:hover,
+.pure-menu li > a:focus {
     background: #eee;
 }
 
+/* EAP add the more specific > prior to a */
+
 /* DISABLED STATES */
-.pure-menu li.pure-menu-disabled a:hover,
-.pure-menu li.pure-menu-disabled a:focus {
+.pure-menu li.pure-menu-disabled > a:hover,
+.pure-menu li.pure-menu-disabled > a:focus {
     background: #fff;
     color: #bfbfbf;
 }

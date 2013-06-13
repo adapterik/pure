@@ -1,39 +1,66 @@
 /*csslint adjoining-classes:false, outline-none:false*/
 /*TODO: Remove this lint rule override after a refactor of this code.*/
 
+/* EAP - initial state of menu children (submenu) is hidden */
+.pure-menu-children {
+    position: relative;
+    visibility: hidden;
+}
+
+.pure-menu-children > ul {
+    visibility: hidden;
+    position: absolute; 
+    left: -10000px;
+    top: -10000px;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+/*
 .pure-menu ul {
     position: absolute;
     visibility: hidden;
 }
+*/
 
+.pure-menu.pure-menu-open > .pure-menu-children {
+    visibility: visible;
+}
+.pure-menu.pure-menu-open > .pure-menu-children > ul {
+    visibility: visible;
+    left: 0;
+    top: 0;
+}
 .pure-menu.pure-menu-open {
     visibility: visible;
     z-index: 2;
     width: 100%;
 }
 
-.pure-menu ul {
-    left: -10000px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    top: -10000px;
-    z-index: 1;
+/* EAP first menu is positioned relative to keep in flow */
+.pure-menu > .pure-menu-children > ul { 
+    position: relative; 
 }
 
-.pure-menu > ul { position: relative; }
-
-.pure-menu-open > ul {
+.pure-menu-children.pure-menu-open {
+    visibility: visible;
+}
+.pure-menu-children.pure-menu-open > ul  {
     left: 0;
     top: 0;
     visibility: visible;
 }
 
-.pure-menu-open > ul:focus {
+.pure-menu-children.pure-menu-open > ul:focus {
     outline: 0;
 }
 
-.pure-menu li { position: relative; }
+.pure-menu li { 
+    position: relative; 
+}
 
 .pure-menu a,
 .pure-menu .pure-menu-heading {
@@ -52,7 +79,9 @@
     margin: 0;
     vertical-align: middle;
 }
-.pure-menu.pure-menu-horizontal > ul {
+
+/* EAP - it looks like the horizontal menu overrides the first menu to be inline block. */
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul {
     display: inline-block;
     *display: inline;
     zoom: 1;
@@ -60,7 +89,9 @@
     height: 2.4em;
 }
 
-.pure-menu li a { padding: 5px 20px; }
+.pure-menu li a { 
+    padding: 5px 20px; 
+}
 
 .pure-menu-can-have-children > .pure-menu-label:after {
     content: '\25B8';
@@ -113,11 +144,12 @@
 }
 
 /* Content after should be down arrow */
-.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label:after {
+/* EAP - add ul for children */
+.pure-menu-horizontal > .pure-menu-children > ul > .pure-menu-can-have-children > .pure-menu-label:after {
     content: "\25BE";
 }
 /*Add extra padding to elements that have the arrow so that the hover looks nice */
-.pure-menu-horizontal > .pure-menu-children > .pure-menu-can-have-children > .pure-menu-label {
+.pure-menu-horizontal > .pure-menu-children > ul > .pure-menu-can-have-children > .pure-menu-label {
     padding-right: 30px;
 }
 
