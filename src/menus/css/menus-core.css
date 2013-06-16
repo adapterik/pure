@@ -1,67 +1,74 @@
 /*csslint adjoining-classes:false, outline-none:false*/
 /*TODO: Remove this lint rule override after a refactor of this code.*/
 
-/* EAP - initial state of menu children (submenu) is hidden */
-.pure-menu-children {
-    position: relative;
-    visibility: hidden;
+/* EAP
+   Overall changes
+   - menu is shown by default not hidden
+   - pure-menu-hidden is used to hide the entire menu or individual submenus.
+   - submenus (children) are represented as div.pure-menu-children > ul, where 
+     div.pure-menu-children is positioned relative and the ul is absolute. This allows
+     the submenu to be approximately where it should be, and the submenu to not cause
+     flow.
+   -
+
+*/
+
+/* EAP remove the pure-menu-open.
+This is now just the default state for the pure-menu.
+Use pure-menu-hidden to hide if you need to.
+
+*/
+.pure-menu {
+    z-index: 2;
+    width: 100%;
 }
 
-.pure-menu-children > ul {
-    visibility: hidden;
-    position: absolute; 
-    left: -10000px;
-    top: -10000px;
 
+/* EAP
+   initial 
+*/
+.pure-menu-children {
+    position: relative;
+}
+
+/* EAP
+   Remove off screen position
+*/
+.pure-menu-children > ul {
+    position: absolute; 
     list-style: none;
     margin: 0;
     padding: 0;
     z-index: 1;
 }
 
-/*
-.pure-menu ul {
-    position: absolute;
-    visibility: hidden;
-}
-*/
-
-.pure-menu.pure-menu-open > .pure-menu-children {
-    visibility: visible;
-}
-.pure-menu.pure-menu-open > .pure-menu-children > ul {
-    visibility: visible;
-    left: 0;
-    top: 0;
-}
-.pure-menu.pure-menu-open {
-    visibility: visible;
-    z-index: 2;
-    width: 100%;
-}
-
-/* EAP first menu is positioned relative to keep in flow */
-.pure-menu > .pure-menu-children > ul { 
-    position: relative; 
-}
-
-.pure-menu-children.pure-menu-open {
-    visibility: visible;
-}
-.pure-menu-children.pure-menu-open > ul  {
-    left: 0;
-    top: 0;
-    visibility: visible;
-}
-
-.pure-menu-children.pure-menu-open > ul:focus {
-    outline: 0;
-}
-
 .pure-menu li { 
     position: relative; 
 }
 
+
+
+/* EAP 
+   First menu is is the top level menu, and it should be in the flow, so it is 
+   redefined as relative.
+*/
+.pure-menu > .pure-menu-children > ul { 
+    position: relative; 
+}
+
+
+/* EAP 
+   remove pure-menu-open -- if we can focus it it is visible. 
+*/
+.pure-menu-children > ul:focus {
+    outline: 0;
+}
+
+
+
+/* EAP
+   Button and Heading 
+*/
 .pure-menu a,
 .pure-menu .pure-menu-heading {
     display: block;
@@ -72,28 +79,17 @@
     white-space: nowrap;
 }
 
-.pure-menu.pure-menu-horizontal > .pure-menu-heading {
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-    margin: 0;
-    vertical-align: middle;
-}
-
-/* EAP - it looks like the horizontal menu overrides the first menu to be inline block. */
-.pure-menu.pure-menu-horizontal > .pure-menu-children > ul {
-    display: inline-block;
-    *display: inline;
-    zoom: 1;
-    vertical-align: middle;
-    height: 2.4em;
-}
-
 .pure-menu li a { 
     padding: 5px 20px; 
 }
 
-.pure-menu-can-have-children > .pure-menu-label:after {
+
+
+
+/* EAP
+   Collapse can-have-children and has-children into just has-children
+*/
+.pure-menu-has-children > .pure-menu-label:after {
     content: '\25B8';
     float: right;
     /* These specific fonts have the Unicode char we need. */
@@ -102,9 +98,10 @@
     margin-top: -1px;
 }
 
-.pure-menu-can-have-children > .pure-menu-label {
+.pure-menu-has-children > .pure-menu-label {
     padding-right: 30px;
 }
+
 
 .pure-menu-separator {
     background-color: #dfdfdf;
@@ -130,8 +127,28 @@
 
 /* HORIZONTAL MENU CODE */
 
-/* Initial menus should be inline-block so that they are horizontal */
-.pure-menu-horizontal li {
+.pure-menu.pure-menu-horizontal > .pure-menu-heading {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    margin: 0;
+    vertical-align: middle;
+}
+
+/* EAP 
+   Horizontal menu overrides the first menu to be inline block. 
+*/
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: middle;
+    height: 2.4em;
+}
+
+
+/* Initial menu should be inline-block so that they are horizontal */
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul > li {
     display: inline-block;
     *display: inline;
     zoom: 1;
@@ -139,31 +156,54 @@
 }
 
 /* Submenus should still be display: block; */
-.pure-menu-horizontal li li {
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul > li li {
     display: block;
 }
 
 /* Content after should be down arrow */
 /* EAP - add ul for children */
-.pure-menu-horizontal > .pure-menu-children > ul > .pure-menu-can-have-children > .pure-menu-label:after {
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul > .pure-menu-has-children > .pure-menu-label:after {
     content: "\25BE";
-}
-/*Add extra padding to elements that have the arrow so that the hover looks nice */
-.pure-menu-horizontal > .pure-menu-children > ul > .pure-menu-can-have-children > .pure-menu-label {
-    padding-right: 30px;
 }
 
 /* Adjusting separator for vertical menus */
-.pure-menu-horizontal li.pure-menu-separator {
+/* EAP - add ul for children */
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul > li.pure-menu-separator {
 	height: 50%;
 	width: 1px;
 	margin: 0 7px;
 }
 
 /* Submenus should be horizontal separator again */
-.pure-menu-horizontal li li.pure-menu-separator {
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul > li li.pure-menu-separator {
 	height: 1px;
 	width: auto;
 	margin: 7px 2px;
 }
 
+
+/* EAP - submenu default position as at the right edge, offset 
+.pure-menu.pure-menu-horizontal .pure-menu-children .pure-menu-children > ul {
+    right: 0;
+
+}
+*/ 
+
+/* EAP
+   Righward shift for sub sub menu */
+.pure-menu.pure-menu-horizontal > .pure-menu-children > ul > li.pure-menu-has-children > .pure-menu-children > ul > li.pure-menu-has-children ul {
+    left: auto; right: -2em;
+}
+
+
+/* EAP 
+   Add dropdown-menu type 
+   This is distinguished in having 100% widths as the vertical menu, 
+   but the down-arrow of the top level horizontal menu.
+*/
+.pure-menu-popdown > .pure-menu-children > ul > .pure-menu-has-children > .pure-menu-label:after {
+    content: "\25BE";
+}
+.pure-menu-popdown > .pure-menu-children > ul > .pure-menu-has-children > .pure-menu-children > ul {
+	width: 100%;
+}
